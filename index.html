@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#4f46e5">
-<title>RouteTracker Pro - Street View Preview</title>
+<title>RouteTracker Pro - Navegación Inteligente</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -49,10 +49,10 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .nl{font-size:9px;text-transform:uppercase;color:var(--tx3);font-weight:600}
 .nn{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nd{font-size:18px;font-weight:800;color:var(--p);cursor:pointer}
-.nav-directions{position:absolute;right:10px;top:130px;width:300px;max-height:300px;overflow-y:auto;z-index:1000;border-radius:14px;background:var(--card);border:1px solid var(--br);display:none;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.nav-directions{position:absolute;right:10px;top:130px;width:300px;max-height:350px;overflow-y:auto;z-index:1000;border-radius:14px;background:var(--card);border:1px solid var(--br);display:none;box-shadow:0 4px 12px rgba(0,0,0,.1)}
 @media (max-width: 640px){.nav-directions{left:10px;right:10px;width:auto}}
 .nav-directions.sh{display:block}
-.nd-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--br)}
+.nd-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--br);position:sticky;top:0;background:var(--card);z-index:1}
 .nd-title{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase}
 .nd-close{background:transparent;border:none;color:var(--tx3);font-size:14px;cursor:pointer;padding:4px}
 .nd-step{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--br2)}
@@ -62,8 +62,8 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .nd-step-dist{font-size:10px;color:var(--tx3);margin-left:8px}
 .ra{position:absolute;left:10px;right:10px;bottom:108px;z-index:1000;display:none}
 .ra.sh{display:block}
-.ar{display:flex;gap:6px}
-.ab{flex:1;padding:12px 6px;border-radius:12px;border:none;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:#fff}
+.ar{display:flex;gap:6px;flex-wrap:wrap}
+.ab{flex:1;padding:12px 6px;border-radius:12px;border:none;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:#fff;min-width:70px}
 .ab:active{transform:scale(.97)}
 .ab1{background:var(--p)}
 .ab2{background:var(--ok)}
@@ -94,7 +94,7 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .sm{font-size:12px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sm.vt{color:var(--ok);text-decoration:line-through}
 .sa{display:flex;gap:4px}
-.sb2{width:32px;height:32px;border-radius:8px;border:1px solid var(--br);background:var(--br2);color:var(--tx2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sb2{width:32px;height:32px;border-radius:8px;border:1px solid var(--br);background:var(--br2);color:var(--tx2);cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .sb2:active{transform:scale(.92)}
 .sb2.gb{color:var(--wn)}
 .sb2.sh2{color:var(--ok)}
@@ -167,7 +167,7 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .rmot{font-size:18px;font-weight:800;margin-bottom:4px}
 .rmosb{font-size:12px;color:var(--tx3);margin-bottom:16px}
 .rtype{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.rtype-btn{flex:1;padding:8px;border-radius:10px;border:2px solid var(--br);background:var(--card);color:var(--tx3);font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.rtype-btn{flex:1;padding:8px;border-radius:10px;border:2px solid var(--br);background:var(--card);color:var(--tx3);font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:60px}
 .rtype-btn.sl{border-color:var(--p);background:rgba(79,70,229,.05);color:var(--p)}
 .rtype-icon{font-size:18px}
 .rroute{background:var(--br2);border-radius:10px;padding:10px;margin-bottom:12px;max-height:150px;overflow-y:auto}
@@ -208,37 +208,15 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .impo-sheet{position:relative;width:100%;max-width:400px;background:var(--card);border-radius:20px 20px 0 0;padding:20px;max-height:85vh;overflow-y:auto}
 .impo-title{font-size:18px;font-weight:800}
 .impo-sub{font-size:12px;color:var(--tx3);margin-bottom:16px}
-.impo-textarea{width:100%;height:180px;background:var(--br2);border:2px solid var(--br);border-radius:12px;padding:12px;color:var(--tx);font-size:13px;outline:none;resize:vertical;font-family:monospace;margin-bottom:12px}
+.impo-textarea{width:100%;height:150px;background:var(--br2);border:2px solid var(--br);border-radius:12px;padding:12px;color:var(--tx);font-size:13px;outline:none;resize:vertical;font-family:monospace;margin-bottom:12px}
 .impo-textarea:focus{border-color:var(--p)}
 .impo-btns{display:flex;gap:10px}
 .impo-btn{flex:1;padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:700;cursor:pointer}
 .ib-cancel{background:var(--br2);color:var(--tx2)}
 .ib-proc{background:var(--p);color:#fff}
-.import-preview{background:var(--br2);border-radius:10px;padding:10px;margin-bottom:12px}
-.import-stats{display:flex;gap:12px;margin-bottom:8px}
-.import-stat{flex:1;text-align:center;padding:6px;background:var(--card);border-radius:8px}
-.import-stat-value{font-size:18px;font-weight:800;color:var(--p)}
-.import-stat-label{font-size:9px;color:var(--tx3)}
 .import-progress{display:none;margin-bottom:12px}
 .import-progress-bar{height:6px;background:var(--br);border-radius:3px;overflow:hidden}
 .import-progress-fill{width:0%;height:100%;background:var(--p);transition:width .3s}
-.sv-modal{position:absolute;inset:0;z-index:1008;display:none;align-items:center;justify-content:center}
-.sv-modal.sh{display:flex}
-.sv-bg{position:absolute;inset:0;background:rgba(0,0,0,.7)}
-.sv-container{position:relative;width:90%;max-width:450px;background:var(--card);border-radius:20px;overflow:hidden}
-.sv-header{padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--br)}
-.sv-header h3{font-size:16px;font-weight:700}
-.sv-close{background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--tx3)}
-.sv-preview{width:100%;height:200px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;position:relative}
-.sv-preview img{width:100%;height:100%;object-fit:cover}
-.sv-preview .sv-loading{position:absolute;width:30px;height:30px;border:3px solid rgba(255,255,255,.3);border-top-color:var(--p);border-radius:50%;animation:spin 1s linear infinite}
-.sv-info{padding:16px}
-.sv-address{font-size:14px;font-weight:600;margin-bottom:8px}
-.sv-coords{font-size:11px;color:var(--tx3);margin-bottom:12px}
-.sv-buttons{display:flex;gap:10px}
-.sv-buttons a{flex:1;padding:10px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:600;text-align:center}
-.sv-buttons .sv-street{background:var(--p);color:#fff}
-.sv-buttons .sv-maps{background:var(--ok);color:#fff}
 .units-selector{position:absolute;left:64px;bottom:160px;z-index:1000}
 .units-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--br);background:var(--card);color:var(--tx2);font-size:13px;font-weight:700;cursor:pointer}
 .theme-toggle{position:absolute;right:10px;top:130px;z-index:1000}
@@ -246,14 +224,14 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 .mode-selector{position:absolute;left:10px;top:130px;z-index:1000;display:flex;gap:6px;background:var(--card);padding:6px;border-radius:12px;border:1px solid var(--br)}
 .mode-btn{padding:6px 12px;border-radius:8px;border:none;background:transparent;font-size:11px;font-weight:600;cursor:pointer}
 .mode-btn.sl{background:var(--p);color:#fff}
-.waiting-indicator{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.8);color:#fff;padding:8px 16px;border-radius:20px;font-size:12px;z-index:1000;display:none;white-space:nowrap}
+.waiting-indicator{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;z-index:1000;display:none;white-space:nowrap;font-weight:600}
 </style>
 </head>
 <body>
 <div id="app">
   <div id="map"></div>
 
-  <div class="mode-selector" id="modeSelector">
+  <div class="mode-selector">
     <button class="mode-btn sl" onclick="setNavigationMode('free')">🔄 Libre</button>
     <button class="mode-btn" onclick="setNavigationMode('ordered')">📋 Ordenada</button>
     <button class="mode-btn" onclick="setNavigationMode('optimized')">⚡ Optimizada</button>
@@ -297,6 +275,7 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
     <div id="gpsPanel" class="gp">
       <button onclick="toggleFollow()"><span id="followDot" class="gd i"></span><span id="followText">Seguir</span></button>
       <button id="manualCompleteBtn" onclick="manualCompleteNext()" style="display:none;background:var(--ok);color:#fff">✅ Marcar llegada</button>
+      <button id="resetRouteBtn" onclick="resetRoute()" style="display:none;background:var(--wn);color:#fff">🔄 Reiniciar</button>
     </div>
   </div>
 
@@ -355,11 +334,8 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
     <div class="impo-bg" onclick="closeImport()"></div>
     <div class="impo-sheet">
       <div class="impo-title">📋 Importar lista de calles</div>
-      <div class="impo-sub">Una dirección por línea - El sistema buscará cada una</div>
-      <div id="importPreview" class="import-preview" style="display:none">
-        <div class="import-stats"><div class="import-stat"><div id="previewLines" class="import-stat-value">0</div><div class="import-stat-label">Líneas</div></div><div class="import-stat"><div id="previewValid" class="import-stat-value" style="color:var(--ok)">0</div><div class="import-stat-label">Válidas</div></div></div>
-      </div>
-      <textarea id="importText" class="impo-textarea" placeholder="Ejemplo:&#10;Calle Gran Vía 10, Madrid&#10;Puerta del Sol, Madrid&#10;Plaza Mayor, Salamanca" oninput="updateImportPreview()"></textarea>
+      <div class="impo-sub">Pega tus direcciones (una por línea) y pulsa Importar</div>
+      <textarea id="importText" class="impo-textarea" placeholder="Ejemplo:&#10;Calle Gran Vía 10, Madrid&#10;Puerta del Sol, Madrid&#10;Plaza Mayor, Salamanca"></textarea>
       <div id="importProgress" class="import-progress"><div id="importProgressText" style="font-size:11px;margin-bottom:6px">Procesando...</div><div class="import-progress-bar"><div id="importProgressFill" class="import-progress-fill"></div></div><div id="importStatus" style="font-size:10px;margin-top:6px"></div></div>
       <div class="impo-btns"><button class="impo-btn ib-cancel" onclick="closeImport()">Cancelar</button><button class="impo-btn ib-proc" onclick="processImport()">🚀 Importar</button></div>
     </div>
@@ -367,39 +343,31 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,Blink
 
   <div id="editStopModal" class="mo" style="z-index:1007"><div class="mb" onclick="closeEditStop()"></div><div class="ms"><div class="mt3">✏️ Modificar parada</div><div class="msub">Edita nombre o coordenadas</div><input id="editName" class="mi" type="text" placeholder="Nombre"><input id="editStreet" class="mi" type="text" placeholder="Calle" style="margin-bottom:6px"><input id="editCity" class="mi" type="text" placeholder="Ciudad/Población" style="margin-bottom:6px"><div style="display:flex;gap:8px;margin-bottom:12px"><input id="editLat" class="mi" type="number" step="any" placeholder="Latitud"><input id="editLng" class="mi" type="number" step="any" placeholder="Longitud"></div><div class="mb2"><button class="mc m1" onclick="closeEditStop()">Cancelar</button><button class="mc m2" onclick="saveEditStop()">Guardar</button></div></div></div>
 
-  <!-- STREET VIEW MODAL CON PREVISUALIZACIÓN -->
-  <div id="streetViewModal" class="sv-modal">
-    <div class="sv-bg" onclick="closeStreetView()"></div>
-    <div class="sv-container">
-      <div class="sv-header"><h3>📍 Vista previa de Street View</h3><button class="sv-close" onclick="closeStreetView()">✕</button></div>
-      <div id="svPreview" class="sv-preview">
-        <div class="sv-loading"></div>
-      </div>
-      <div class="sv-info">
-        <div id="svAddress" class="sv-address"></div>
-        <div id="svCoords" class="sv-coords"></div>
-        <div class="sv-buttons">
-          <a id="svStreetLink" href="#" target="_blank" class="sv-street">🌐 Street View Web</a>
-          <a id="svMapsLink" href="#" target="_blank" class="sv-maps">🗺️ Google Maps</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div id="routeModal" class="rmo"><div class="rmob" onclick="closeRouteModal()"></div><div class="rmos"><div class="rmot">🗺️ Generar ruta</div><div id="routeInfo" class="rmosb"></div><div class="rtype" id="transportType"></div><div class="rroute" id="routePreview"></div><div class="rmbtns"><button class="rmbtn" style="background:#059669" onclick="shareWhatsAppRoute()">📱 WhatsApp</button><button class="rmbtn" style="background:var(--p)" onclick="openGoogleMapsRoute()">🗺️ Google Maps</button><button class="rmbtn" style="background:var(--p)" onclick="openGoogleMapsAllStops()">📍 Todas en Maps</button><button class="rmbtn" style="background:var(--wn)" onclick="copyRouteLink()">📋 Copiar enlace</button><button class="rmbtn rmbtn-cn" onclick="closeRouteModal()">Cancelar</button></div></div></div>
 </div>
 
 <script>
 // ==================== GLOBALES ====================
-let stops = [], savedRoutes = JSON.parse(localStorage.getItem('routes') || '[]');
-let currentLocation = null, gpsWatchId = null, gpsActive = false, followMode = true;
-let completedStops = new Set(), currentModal = null, shareType = null, editingStopIndex = null;
-let routeType = 0, optimizeRoute = 0, currentUnits = localStorage.getItem('units') || 'km', currentTheme = localStorage.getItem('theme') || 'light';
+let stops = [];
+let savedRoutes = JSON.parse(localStorage.getItem('routes') || '[]');
+let currentLocation = null;
+let gpsWatchId = null;
+let gpsActive = false;
+let followMode = true;
+let completedStops = new Set();
+let currentModal = null;
+let editingStopIndex = null;
+let routeType = 0;
+let optimizeRoute = 0;
+let currentUnits = localStorage.getItem('units') || 'km';
+let currentTheme = localStorage.getItem('theme') || 'light';
 let navigationMode = localStorage.getItem('navMode') || 'free';
 let map, tileLayer, currentLayer = 0, currentMode = 0;
 let recognition = null, isListening = false, voiceAutoSave = true, voiceCount = 0;
 let geocodeQueue = [], geocodeBusy = false;
 let waitingTimer = null, isWaitingForArrival = false, pendingCompleteStop = null;
+let markers = [], routeLine = null;
+let lastKnownLocation = null;
 
 const COLORS = ['#4f46e5','#0891b2','#059669','#d97706','#dc2626','#db2777','#7c3aed','#ea580c'];
 const QUICK_NAMES = ['Ruta trabajo', 'Paseo', 'Turismo', 'Mandados', 'Casa→Trabajo'];
@@ -425,91 +393,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ==================== STREET VIEW CON PREVISUALIZACIÓN ====================
-function openStreetViewWithPreview(stopIndex) {
-  const stop = stops[stopIndex];
-  if (!stop) return;
-  
-  const displayAddress = stop.street ? (stop.city ? `${stop.street}, ${stop.city}` : stop.street) : stop.address;
-  document.getElementById('svAddress').textContent = displayAddress;
-  document.getElementById('svCoords').textContent = `📍 ${stop.lat.toFixed(6)}, ${stop.lng.toFixed(6)}`;
-  
-  // Enlaces directos
-  const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${stop.lat},${stop.lng}`;
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
-  document.getElementById('svStreetLink').href = streetViewUrl;
-  document.getElementById('svMapsLink').href = mapsUrl;
-  
-  // Cargar vista previa de Street View (usando servicio gratuito)
-  const previewContainer = document.getElementById('svPreview');
-  previewContainer.innerHTML = '<div class="sv-loading"></div>';
-  
-  // Intentar cargar imagen de Street View (sin API key, con servicio alternativo)
-  const imgUrl = `https://maps.googleapis.com/maps/api/streetview?size=400x250&location=${stop.lat},${stop.lng}&heading=0&pitch=0&key=`;
-  const img = new Image();
-  img.onload = () => {
-    previewContainer.innerHTML = `<img src="${imgUrl}" alt="Street View">`;
-  };
-  img.onerror = () => {
-    // Si no hay imagen disponible, mostrar mensaje amigable
-    previewContainer.innerHTML = `
-      <div style="text-align:center;padding:20px;color:#fff">
-        <div style="font-size:32px;margin-bottom:10px">📷</div>
-        <div>No hay imagen de Street View disponible para esta ubicación</div>
-        <div style="font-size:11px;margin-top:8px">Haz clic en "Street View Web" para ver en Google Maps</div>
-      </div>
-    `;
-  };
-  img.src = imgUrl;
-  
-  document.getElementById('streetViewModal').classList.add('sh');
-}
-
-function closeStreetView() { 
-  document.getElementById('streetViewModal').classList.remove('sh'); 
-}
-
-// ==================== FUNCIONES DE PARADA CON STREET VIEW ====================
+// ==================== NAVEGACIÓN ====================
 function setNavigationMode(mode) {
   navigationMode = mode;
   localStorage.setItem('navMode', mode);
   updateModeSelectorUI();
   updateUI();
-  showToast(`Modo: ${mode === 'free' ? '📌 Libre' : mode === 'ordered' ? '📋 Ordenada' : '⚡ Optimizada'}`, 'ok');
+  showToast(`Modo: ${mode === 'free' ? '📌 Libre (más cercana)' : mode === 'ordered' ? '📋 Ordenada' : '⚡ Optimizada (más eficiente)'}`, 'ok');
 }
 
 function updateModeSelectorUI() {
+  const modes = ['free', 'ordered', 'optimized'];
   document.querySelectorAll('.mode-btn').forEach((btn, i) => {
-    const modes = ['free', 'ordered', 'optimized'];
     btn.classList.toggle('sl', modes[i] === navigationMode);
   });
 }
 
 function getNextStop() {
-  if (navigationMode === 'free') {
-    if (!currentLocation) return stops.find(s => !completedStops.has(s.id));
-    let nearest = null, minDist = Infinity;
-    stops.forEach(s => {
-      if (!completedStops.has(s.id)) {
-        const d = getDistance(currentLocation.lat, currentLocation.lng, s.lat, s.lng);
-        if (d < minDist) { minDist = d; nearest = s; }
-      }
-    });
+  const remaining = stops.filter(s => !completedStops.has(s.id));
+  if (remaining.length === 0) return null;
+  
+  if (navigationMode === 'free' && currentLocation) {
+    let nearest = remaining[0];
+    let minDist = getDistance(currentLocation.lat, currentLocation.lng, nearest.lat, nearest.lng);
+    for (let i = 1; i < remaining.length; i++) {
+      const d = getDistance(currentLocation.lat, currentLocation.lng, remaining[i].lat, remaining[i].lng);
+      if (d < minDist) { minDist = d; nearest = remaining[i]; }
+    }
     return nearest;
-  } else if (navigationMode === 'ordered') {
-    return stops.find(s => !completedStops.has(s.id));
-  } else {
-    const remaining = stops.filter(s => !completedStops.has(s.id));
-    if (!currentLocation || remaining.length === 0) return remaining[0];
-    let nearest = null, minDist = Infinity;
-    remaining.forEach(s => {
-      const d = getDistance(currentLocation.lat, currentLocation.lng, s.lat, s.lng);
-      if (d < minDist) { minDist = d; nearest = s; }
-    });
+  } else if (navigationMode === 'optimized' && currentLocation) {
+    let nearest = remaining[0];
+    let minDist = getDistance(currentLocation.lat, currentLocation.lng, nearest.lat, nearest.lng);
+    for (let i = 1; i < remaining.length; i++) {
+      const d = getDistance(currentLocation.lat, currentLocation.lng, remaining[i].lat, remaining[i].lng);
+      if (d < minDist) { minDist = d; nearest = remaining[i]; }
+    }
     return nearest;
   }
+  return remaining[0];
 }
 
+function resetRoute() {
+  completedStops.clear();
+  updateUI();
+  showToast('🔄 Ruta reiniciada. Todas las paradas están pendientes.', 'ok');
+}
+
+// ==================== DETECCIÓN DE LLEGADA ====================
 function checkAndMarkArrival() {
   if (!currentLocation || !stops.length) return;
   const next = getNextStop();
@@ -539,7 +469,7 @@ function checkAndMarkArrival() {
       if (!isWaitingForArrival) { clearInterval(interval); return; }
       seconds--;
       if (seconds <= 0) clearInterval(interval);
-      indicator.textContent = `🕐 Esperando ${seconds} segundos para marcar llegada...`;
+      indicator.textContent = `🕐 Esperando ${seconds} segundos para marcar llegada a "${next.address.substring(0,25)}..."`;
     }, 1000);
   }
   
@@ -571,6 +501,7 @@ function completeStop(stopId) {
   updateUI();
   if (stops.every(s => completedStops.has(s.id))) {
     showToast('🎉 ¡Felicidades! Completaste todas las paradas', 'ok');
+    playSound();
   }
 }
 
@@ -651,8 +582,6 @@ function processGeocodeQueue() {
 }
 
 // ==================== MAPA ====================
-let markers = [], routeLine = null;
-
 function updateMap() {
   markers.forEach(m => map.removeLayer(m));
   if (routeLine) map.removeLayer(routeLine);
@@ -670,15 +599,19 @@ function updateMap() {
     const icon = L.divIcon({ html: `<div style="width:${size}px;height:${size}px;background:${color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15);font-size:${size<32?12:14}px">${isCompleted ? '✓' : originalIdx+1}</div>`, iconSize: [size, size], iconAnchor: [size/2, size/2] });
     const marker = L.marker([stop.lat, stop.lng], { icon, draggable: true }).addTo(map);
     marker.on('dragend', async e => { const pos = e.target.getLatLng(); stop.lat = pos.lat; stop.lng = pos.lng; const addrInfo = await reverseGeocode(pos.lat, pos.lng); if (addrInfo) { stop.street = addrInfo.street; stop.city = addrInfo.city; stop.address = addrInfo.street ? (addrInfo.city ? `${addrInfo.street}, ${addrInfo.city}` : addrInfo.street) : (addrInfo.city || stop.address); } updateUI(); });
+    
     const displayAddress = stop.street ? (stop.city ? `${stop.street}, ${stop.city}` : stop.street) : stop.address;
+    const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${stop.lat},${stop.lng}`;
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}`;
+    
     marker.bindPopup(`
-      <div style="text-align:center;min-width:180px">
-        <div style="font-weight:700;margin-bottom:4px">${displayAddress}</div>
+      <div style="text-align:center;min-width:200px">
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px">${displayAddress}</div>
         ${stop.city ? `<div style="font-size:10px;color:#64748b;margin-bottom:8px">📍 ${stop.city}</div>` : ''}
-        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-          <button onclick="openStreetViewWithPreview(${originalIdx})" style="padding:6px 10px;background:#4f46e5;color:#fff;border-radius:8px;border:none;font-size:11px;cursor:pointer">📷 Ver Street View</button>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}" target="_blank" style="padding:6px 10px;background:#059669;color:#fff;border-radius:8px;font-size:11px;text-decoration:none">🗺️ Cómo llegar</a>
-          <button onclick="correctWithGPS(${originalIdx})" style="padding:6px 10px;background:#d97706;color:#fff;border-radius:8px;border:none;font-size:11px;cursor:pointer">📍 Corregir con GPS</button>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <a href="${streetViewUrl}" target="_blank" style="padding:8px 12px;background:#4f46e5;color:#fff;border-radius:8px;font-size:11px;text-decoration:none;font-weight:600">📷 Street View</a>
+          <a href="${mapsUrl}" target="_blank" style="padding:8px 12px;background:#059669;color:#fff;border-radius:8px;font-size:11px;text-decoration:none;font-weight:600">🗺️ Cómo llegar</a>
+          <button onclick="correctWithGPS(${originalIdx})" style="padding:8px 12px;background:#d97706;color:#fff;border-radius:8px;border:none;font-size:11px;cursor:pointer;font-weight:600">📍 GPS</button>
         </div>
       </div>`);
     markers.push(marker);
@@ -691,7 +624,9 @@ function updateMap() {
   
   const allPoints = stops.map(s => [s.lat, s.lng]);
   if (currentLocation) allPoints.push([currentLocation.lat, currentLocation.lng]);
-  if (allPoints.length) map.fitBounds(allPoints, { padding: [50, 70], maxZoom: 15 });
+  if (allPoints.length && allPoints.length > 0) {
+    try { map.fitBounds(allPoints, { padding: [50, 70], maxZoom: 15 }); } catch(e) {}
+  }
 }
 
 function getDisplayStops() {
@@ -741,6 +676,7 @@ function startGPS() {
   document.getElementById('gpsBtn').classList.add('act');
   document.getElementById('centerBtn').style.display = 'flex';
   document.getElementById('manualCompleteBtn').style.display = 'flex';
+  document.getElementById('resetRouteBtn').style.display = 'flex';
   showToast('📍 GPS activado', 'ok');
   updateUI();
 }
@@ -753,6 +689,7 @@ function stopGPS() {
   document.getElementById('gpsBtn').classList.remove('act');
   document.getElementById('centerBtn').style.display = 'none';
   document.getElementById('manualCompleteBtn').style.display = 'none';
+  document.getElementById('resetRouteBtn').style.display = 'none';
   if (waitingTimer) clearTimeout(waitingTimer);
   isWaitingForArrival = false;
   document.getElementById('waitingIndicator').style.display = 'none';
@@ -771,7 +708,7 @@ function correctWithGPS(idx) {
   stops[idx].lat = currentLocation.lat;
   stops[idx].lng = currentLocation.lng;
   updateUI();
-  showToast('✅ Posición corregida', 'ok');
+  showToast('✅ Posición corregida con GPS', 'ok');
 }
 
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -787,6 +724,7 @@ function formatDistance(m) {
   return m < 1609 ? `${Math.round(m)}m` : `${(m/1609).toFixed(1)}mi`;
 }
 
+// ==================== INDICACIONES ====================
 async function getDirections(from, to) {
   const url = `https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${to.lng},${to.lat}?overview=false&steps=true`;
   try {
@@ -923,7 +861,7 @@ function getOrderedStopsForRoute() {
     let minDist = Infinity;
     remaining.forEach((s, i) => { const d = getDistance(currentLocation.lat, currentLocation.lng, s.lat, s.lng); if (d < minDist) { minDist = d; startIdx = i; } });
   }
-  ordered.push(remaining.splice(startIdx, 1)[0]);
+  if (remaining.length) ordered.push(remaining.splice(startIdx, 1)[0]);
   while (remaining.length) {
     let last = ordered[ordered.length-1];
     let nearest = 0, minDist = Infinity;
@@ -998,7 +936,6 @@ function decodeRoute(str) {
 
 function openShare() {
   if (!stops.length) { showToast('Añade paradas primero', 'er'); return; }
-  shareType = 'route';
   document.getElementById('shareDesc').textContent = `${stops.length} paradas`;
   document.getElementById('shareOptions').innerHTML = `
     <div class="soi" onclick="shareWhatsApp()"><div class="soic">📱</div><div class="soin"><div class="soit">WhatsApp</div><div class="soid">Enviar ruta por WhatsApp</div></div><span class="soa">›</span></div>
@@ -1058,11 +995,12 @@ function renderStopsList() {
   stops.forEach((s, i) => {
     const isCompleted = completedStops.has(s.id);
     const displayAddress = s.street ? (s.city ? `${s.street}, ${s.city}` : s.street) : s.address;
+    const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${s.lat},${s.lng}`;
     html += `<div class="si2 ${isCompleted ? 'v' : ''}" onclick="centerOnStop(${i})">
       <div class="sn" style="background:${isCompleted ? '#059669' : i===0 ? '#059669' : i===stops.length-1 ? '#dc2626' : COLORS[i%COLORS.length]}">${isCompleted ? '✓' : i+1}</div>
       <div class="sf"><div class="sm ${isCompleted ? 'vt' : ''}">${displayAddress}</div>${s.city ? `<div style="font-size:9px;color:var(--tx3)">📍 ${s.city}</div>` : ''}</div>
       <div class="sa">
-        <button class="sb2 gb" onclick="event.stopPropagation();openStreetViewWithPreview(${i})">📷</button>
+        <a href="${streetViewUrl}" target="_blank" class="sb2 gb" style="text-decoration:none;display:flex;align-items:center;justify-content:center">📷</a>
         <button class="sb2 gb" onclick="event.stopPropagation();openEditStop(${i})">✏️</button>
         <button class="sb2 sh2" onclick="event.stopPropagation();correctWithGPS(${i})">📍</button>
         <button class="sb2 db" onclick="event.stopPropagation();deleteStop(${i})">✕</button>
@@ -1087,43 +1025,62 @@ function deleteStop(i) { completedStops.delete(stops[i].id); stops.splice(i,1); 
 function clearAllStops() { stops = []; completedStops.clear(); updateUI(); closeModal(); showToast('Lista vaciada', 'ok'); }
 function closeModal() { currentModal = null; document.getElementById('modalOverlay').classList.remove('sh'); }
 
-// ==================== IMPORTAR ====================
-function openImport() { document.getElementById('importText').value = ''; document.getElementById('importPreview').style.display = 'none'; document.getElementById('importProgress').style.display = 'none'; document.getElementById('importModal').classList.add('sh'); }
-function closeImport() { document.getElementById('importModal').classList.remove('sh'); }
-function updateImportPreview() {
-  const text = document.getElementById('importText').value;
-  const lines = text.split('\n').filter(l => l.trim().length >= 3);
-  document.getElementById('previewLines').textContent = lines.length;
-  document.getElementById('previewValid').textContent = lines.length;
-  document.getElementById('importPreview').style.display = text ? 'block' : 'none';
+// ==================== IMPORTAR MEJORADO ====================
+function openImport() { 
+  document.getElementById('importText').value = ''; 
+  document.getElementById('importProgress').style.display = 'none'; 
+  document.getElementById('importModal').classList.add('sh'); 
 }
+function closeImport() { document.getElementById('importModal').classList.remove('sh'); }
+
 async function processImport() {
   const text = document.getElementById('importText').value;
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length >= 3);
   if (!lines.length) { showToast('No hay direcciones válidas', 'er'); return; }
+  
   const progressDiv = document.getElementById('importProgress');
   const progressFill = document.getElementById('importProgressFill');
   const progressText = document.getElementById('importProgressText');
   const statusDiv = document.getElementById('importStatus');
   progressDiv.style.display = 'block';
+  progressFill.style.width = '0%';
   let added = 0, failed = 0;
+  
   for (let i = 0; i < lines.length; i++) {
-    progressFill.style.width = `${(i/lines.length)*100}%`;
-    progressText.textContent = `Procesando ${i+1}/${lines.length}: "${lines[i].substring(0,30)}"`;
+    const percent = ((i + 1) / lines.length) * 100;
+    progressFill.style.width = `${percent}%`;
+    progressText.textContent = `Procesando ${i+1}/${lines.length}: "${lines[i].substring(0,30)}..."`;
     statusDiv.innerHTML = `✅ Añadidas: ${added} | ❌ Fallidas: ${failed}`;
+    
     const coords = await geocode(lines[i]);
     if (coords) {
       const addrInfo = await reverseGeocode(coords.lat, coords.lng);
       let street = '', city = '';
       if (addrInfo) { street = addrInfo.street; city = addrInfo.city; }
-      stops.push({ id: Date.now()+Math.random(), address: lines[i], street, city, lat: coords.lat, lng: coords.lng });
+      stops.push({ 
+        id: Date.now() + Math.random(), 
+        address: lines[i], 
+        street: street, 
+        city: city, 
+        lat: coords.lat, 
+        lng: coords.lng 
+      });
       added++;
-    } else failed++;
+    } else {
+      failed++;
+    }
     await new Promise(r => setTimeout(r, 600));
   }
+  
   progressFill.style.width = '100%';
   progressText.textContent = '¡Importación completada!';
-  setTimeout(() => { closeImport(); updateUI(); showToast(`✅ ${added} paradas añadidas${failed?` (${failed} fallidas)`:''}`, 'ok'); }, 1000);
+  statusDiv.innerHTML = `✅ Completado: ${added} añadidas, ${failed} fallidas`;
+  
+  setTimeout(() => { 
+    closeImport(); 
+    updateUI(); 
+    showToast(`✅ ${added} paradas añadidas${failed ? ` (${failed} fallidas)` : ''}`, 'ok'); 
+  }, 1500);
 }
 
 // ==================== VOZ ====================
@@ -1171,7 +1128,7 @@ function toggleTheme() { currentTheme = currentTheme === 'dark' ? 'light' : 'dar
 function applyTheme() { if (currentTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme'); document.querySelector('.theme-btn').textContent = currentTheme === 'dark' ? '☀️' : '🌙'; }
 function toggleUnits() { currentUnits = currentUnits === 'km' ? 'mi' : 'km'; localStorage.setItem('units', currentUnits); document.getElementById('unitsBtn').textContent = currentUnits; updateUI(); }
 function toggleDirections() { document.getElementById('directionsPanel').classList.toggle('sh'); }
-function showToast(msg, type) { const toast = document.createElement('div'); toast.className = `to ${type}`; toast.textContent = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 2500); }
+function showToast(msg, type) { const toast = document.createElement('div'); toast.className = `to ${type}`; toast.textContent = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
 function showError(msg) { const err = document.getElementById('searchError'); err.textContent = `⚠️ ${msg}`; err.style.display = 'block'; setTimeout(() => err.style.display = 'none', 3000); }
 function playSound() { try { new Audio('data:audio/wav;base64,U3RlYWx0aCBzb3VuZA==').play(); } catch(e) {} }
 </script>
